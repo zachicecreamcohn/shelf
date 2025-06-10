@@ -1,45 +1,61 @@
-app = "shelf-zachwcohn"
-primary_region = "ewr"
-kill_signal = "SIGINT"
-kill_timeout = "5s"
+# fly.toml app configuration file generated for shelf-zachwcohn on 2025-06-09T23:57:41-05:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'shelf-zachwcohn'
+primary_region = 'ord'
+kill_signal = 'SIGINT'
+kill_timeout = '5s'
 swap_size_mb = 512
 
 [experimental]
-auto_rollback = true
+  auto_rollback = true
+
+[build]
 
 [deploy]
-strategy = "rolling"
+  strategy = 'rolling'
 
 [env]
-NODE_ENV = "production"
-PORT = "8080"
-
-[[services.ports]]
-handlers = ["http"]
-port = 80
-force_https = true
-
-[[services.ports]]
-handlers = ["tls", "http"]
-port = 443
+  NODE_ENV = 'production'
+  PORT = '8080'
 
 [http_service]
-internal_port = 8080
-force_https = true
-auto_stop_machines = "off"
-auto_start_machines = false
-min_machines_running = 1
-processes = ["app"]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = 'off'
+  auto_start_machines = false
+  min_machines_running = 1
+  processes = ['app']
 
-[http_service.concurrency]
-type = "requests"
-soft_limit = 100
-hard_limit = 125
+  [http_service.concurrency]
+    type = 'requests'
+    hard_limit = 125
+    soft_limit = 100
 
-[[http_service.checks]]
-grace_period = "5s"
-interval = "10s"
-method = "GET"
-timeout = "2s"
-path = "/healthcheck"
-protocol = "http"
+  # [[http_service.checks]]
+  #   interval = '10s'
+  #   timeout = '2s'
+  #   grace_period = '5s'
+  #   method = 'GET'
+  #   path = '/healthcheck'
+  #   protocol = 'http'
+
+[[services]]
+  protocol = ''
+  internal_port = 0
+
+  [[services.ports]]
+    port = 80
+    handlers = ['http']
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ['tls', 'http']
+
+[[vm]]
+  memory = '2gb'
+  cpu_kind = 'shared'
+  cpus = 1
