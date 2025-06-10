@@ -1,5 +1,5 @@
 app = "shelf-webapp"
-primary_region = "ams"
+primary_region = "ewr"
 kill_signal = "SIGINT"
 kill_timeout = "5s"
 swap_size_mb = 512
@@ -43,4 +43,3 @@ method = "GET"
 timeout = "2s"
 path = "/healthcheck"
 protocol = "http"
-
